@@ -25,7 +25,6 @@ public class FormFragment extends Fragment {
     Button save;
     public static TaskModel model;
     public static int requestCode;
-    HomeAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +42,7 @@ public class FormFragment extends Fragment {
             if (!tit.isEmpty() && !des.isEmpty()) {
                 requestCode = 100;
             }
-            model = new TaskModel(des,tit);
+            model = new TaskModel(tit,des);
             HomeFragment.Receiver(model,requestCode);
             NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
             navController .navigateUp();

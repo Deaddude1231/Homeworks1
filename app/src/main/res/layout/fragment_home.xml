@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#A5A5A5"
+    android:background="#221F1F"
+    android:columnCount="2"
     android:layout_height="match_parent"
+    android:padding="15dp"
     tools:context=".ui.home.HomeFragment">
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="5dp"
         android:id="@+id/rv_task"
-        tools:listitem="@layout/task_item"
+        android:orientation="vertical"
+        tools:listitem="@layout/layout_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

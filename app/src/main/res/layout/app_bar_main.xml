@@ -5,21 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/Theme.Slsl1_2.AppBarOverlay">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/black"
-            app:popupTheme="@style/Theme.Slsl1_2.PopupOverlay" />
+            android:background="#000000"
+            app:popupTheme="@style/Theme.Slsl1_2.PopupOverlay">
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_change"
+                android:layout_marginLeft="270dp"
+                android:textColor="@color/white"
+                android:text="Grid/Line"
+                android:background="#00000000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
-
     <include layout="@layout/content_main" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

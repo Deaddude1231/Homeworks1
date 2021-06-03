@@ -1,8 +1,10 @@
 package com.example.slsl1_2;
 
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
 
 import com.example.slsl1_2.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
@@ -21,18 +23,18 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    public Button btn_change;
+    public static boolean orStatus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.appBarMain.toolbar);
+        initButton();
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setDrawerLayout(drawer)
@@ -41,8 +43,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         binding.appBarMain.fab.setOnClickListener(view -> {
-        navController.navigate(R.id.action_nav_home_to_formFragment);
+            navController.navigate(R.id.action_nav_home_to_formFragment);
         });
+    }
+
+    private void initButton() {
+        binding.appBarMain.btnChange.setOnClickListener(v -> orStatus = !orStatus);
+
     }
 
     @Override

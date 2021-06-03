@@ -3,11 +3,14 @@ package com.example.slsl1_2.ui.home;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slsl1_2.MainActivity;
 import com.example.slsl1_2.Model.TaskModel;
 import com.example.slsl1_2.R;
 
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     public static ArrayList<TaskModel> list = new ArrayList<>();
+    public static RecyclerView rvTask;
 
     public void addModel(TaskModel model) {
         list.add(model);
@@ -27,7 +31,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_grid,parent,false);
         return new ViewHolder(view);
     }
 
@@ -46,8 +51,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.desc_item);
-            desc = itemView.findViewById(R.id.title_item);
+            title = itemView.findViewById(R.id.title1);
+            desc = itemView.findViewById(R.id.desc1);
         }
 
         public void onBind(TaskModel taskModel) {
