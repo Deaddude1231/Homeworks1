@@ -1,0 +1,2 @@
+rootProject.name = "slsl1_2"
+include ':app'

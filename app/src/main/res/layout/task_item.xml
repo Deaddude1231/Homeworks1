@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp">
+<TextView
+    android:textColor="@color/black"
+    android:text="title"
+    android:textSize="22dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/title_item"/>
+    <TextView
+        android:text="desc"
+        android:textSize="17dp"
+        android:id="@+id/desc_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</GridLayout>
