@@ -11,15 +11,9 @@
     android:background="@drawable/grid_background">
         <TextView
             android:textColor="@color/black"
-            android:id="@+id/title1"
+            android:id="@+id/title_item"
             android:textSize="22sp"
             android:text="Пример..."
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-        <TextView
-            android:id="@+id/desc1"
-            android:text="Пример..."
-            android:textSize="17sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 </GridLayout>

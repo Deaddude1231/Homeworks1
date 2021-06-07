@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_nav_home_to_formFragment"
             app:destination="@id/formFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_aboutItemFragment"
+            app:destination="@id/aboutItemFragment" />
     </fragment>
 
     <fragment
@@ -31,4 +34,9 @@
         android:name="com.example.slsl1_2.ui.slideshow.FormFragment"
         android:label="fragment_form"
         tools:layout="@layout/fragment_form" />
+    <fragment
+        android:id="@+id/aboutItemFragment"
+        android:name="com.example.slsl1_2.fragments.AboutItemFragment"
+        android:label="fragment_about_item"
+        tools:layout="@layout/fragment_about_item" />
 </navigation>
