@@ -43,13 +43,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         holder.onBind(list.get(position));
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // NavController navController = Navigation.findNavController(,R.id.action_nav_home_to_aboutItemFragment);
-                //navController.navigateUp();
-            }
-        });
     }
 
     @Override
