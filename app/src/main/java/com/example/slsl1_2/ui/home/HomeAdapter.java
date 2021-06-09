@@ -6,12 +6,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.R;
-import com.example.slsl1_2.ui.OnItemClickListener;
+import com.example.slsl1_2.interfaces.OnItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 

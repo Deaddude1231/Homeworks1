@@ -13,11 +13,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.slsl1_2.databinding.FragmentFormBinding;
-import com.example.slsl1_2.databinding.FragmentHomeBinding;
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.R;
-import com.example.slsl1_2.ui.OnItemClickListener;
-import com.example.slsl1_2.ui.home.HomeFragment;
+import com.example.slsl1_2.interfaces.OnItemClickListener;
 
 
 public class FormFragment extends Fragment {

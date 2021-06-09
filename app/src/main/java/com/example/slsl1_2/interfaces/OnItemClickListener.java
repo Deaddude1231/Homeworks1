@@ -1,4 +1,4 @@
-package com.example.slsl1_2.ui;
+package com.example.slsl1_2.interfaces;
 
 import com.example.slsl1_2.model.TaskModel;
 

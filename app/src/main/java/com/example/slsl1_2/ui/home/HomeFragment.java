@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.slsl1_2.R;
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.databinding.FragmentHomeBinding;
-import com.example.slsl1_2.ui.OnItemClickListener;
+import com.example.slsl1_2.interfaces.OnItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         getParentFragmentManager().setFragmentResultListener("eKey", getViewLifecycleOwner(), (requestKey, result) -> {
             TaskModel model = (TaskModel) result.getSerializable("keyModel");
             if (model != null) {
-                adapter.addModel(model,HomeFragment.this);
+                adapter.addModel(model,this);
             }
         });
         getParentFragmentManager().setFragmentResultListener("editData", getViewLifecycleOwner(), ((requestKey, result) -> {
