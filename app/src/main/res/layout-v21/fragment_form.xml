@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/drawer_background"
-    android:padding="20dp">
+    android:background="@drawable/drawer_background">
     <EditText
         android:layout_marginTop="60dp"
         android:padding="20dp"
@@ -49,6 +48,7 @@
         android:layout_toEndOf="@id/btn_black"
         android:layout_marginStart="20dp" />
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_red"
         android:layout_below="@id/title_et"
         android:layout_width="80dp"
         android:layout_height="45dp"

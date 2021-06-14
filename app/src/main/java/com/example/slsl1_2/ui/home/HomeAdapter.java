@@ -1,5 +1,8 @@
 package com.example.slsl1_2.ui.home;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +18,34 @@ import com.example.slsl1_2.interfaces.OnItemClickListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> implements View.OnClickListener {
-    public static ArrayList<TaskModel> list = new ArrayList<>();
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
+    public List<TaskModel> list = new ArrayList<>();
+    public List<TaskModel> listSource = new ArrayList<>();
     View view;
     private OnItemClickListener listener;
+    private TaskModel model;
+
+
+    public HomeAdapter(OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public void addModel(TaskModel model, OnItemClickListener listener) {
-        this.listener = listener;
         list.add(model);
+        listSource = list;
         notifyDataSetChanged();
+    }
+    public void editModel(TaskModel model, int position) {
+        list.get(position).setTitle(model.getTitle());
+        notifyItemChanged(position);
+    }
+    public void addListOfModel(List<TaskModel> listM){
+        list.clear();
+        this.list.addAll(listM);
+        notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -50,14 +71,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
         return list.size();
     }
 
-    public void editModel(TaskModel model, int position) {
-        list.get(position).setTitle(model.getTitle());
-        notifyItemChanged(position);
+    public void filterList(List<TaskModel> filteredList) {
+        list = filteredList;
+        notifyDataSetChanged();
     }
 
-    @Override
-    public void onClick(View v) {
-
+    public void listEmpty() {
+        list = listSource;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -67,9 +88,28 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> im
             super(itemView);
             title = itemView.findViewById(R.id.title_item);
         }
-
-        public void onBind(TaskModel taskModel) {
-            title.setText(taskModel.getTitle());
+        @SuppressLint("ResourceAsColor")
+        public void onBind(TaskModel model) {
+            itemView.setOnClickListener(v -> {
+                listener.onItemClick(getAdapterPosition(),model);
+            });
+            title.setText(model.getTitle());
+           if (model.getBackground() != null) {
+                switch (model.getBackground()) {
+                    case "black":
+                        title.setTextColor(Color.parseColor("#FFF300"));
+                        itemView.setBackgroundResource(R.drawable.btn_black);
+                        break;
+                    case "yellow":
+                        title.setTextColor(Color.parseColor("#EC0505"));
+                        itemView.setBackgroundResource(R.drawable.btn_yellow);
+                        break;
+                    case "red":
+                        title.setTextColor(Color.parseColor("#000000"));
+                        itemView.setBackgroundResource(R.drawable.btn_red);
+                        break;
+                }
+            }
         }
     }
 }

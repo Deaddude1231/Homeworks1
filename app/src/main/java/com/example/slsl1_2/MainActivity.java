@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(R.id.action_nav_home_to_formFragment);
         });
     }
+    public void getImage(){
+
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

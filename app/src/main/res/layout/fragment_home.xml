@@ -5,9 +5,17 @@
     android:layout_width="match_parent"
     android:background="#221F1F"
     android:columnCount="2"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     android:padding="15dp"
     tools:context=".ui.home.HomeFragment">
+    <EditText
+        android:id="@+id/searchEt"
+        android:textColorHint="@color/white"
+        android:hint="write here"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_margin="5dp"
         android:id="@+id/rv_task"

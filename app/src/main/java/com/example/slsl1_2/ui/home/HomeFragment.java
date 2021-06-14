@@ -2,6 +2,8 @@ package com.example.slsl1_2.ui.home;
 
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +27,9 @@ import com.example.slsl1_2.interfaces.OnItemClickListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
@@ -44,35 +49,29 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         View root = binding.getRoot();
         initRecycler();
         getDataForm();
+        addTextListener();
         return root;
     }
 
     private void getDataForm() {
         if (!orStatus) {
-            binding.rvTask.setLayoutManager(staggeredGridLayoutManager);
+            binding.rvTask.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         } else {
-            binding.rvTask.setLayoutManager(linearLayoutManager);
+            binding.rvTask.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-        binding.rvTask.setAdapter(adapter);
         getParentFragmentManager().setFragmentResultListener("eKey", getViewLifecycleOwner(), (requestKey, result) -> {
             TaskModel model = (TaskModel) result.getSerializable("keyModel");
-            if (model != null) {
-                adapter.addModel(model,this);
-            }
+            adapter.addModel(model,HomeFragment.this);
         });
-        getParentFragmentManager().setFragmentResultListener("editData", getViewLifecycleOwner(), ((requestKey, result) -> {
+        getParentFragmentManager().setFragmentResultListener("editData", getViewLifecycleOwner(), (requestKey, result) -> {
             TaskModel model = (TaskModel) result.getSerializable("keyModel");
-            if(model != null){
-                adapter.editModel(model, result.getInt("position"));
-            }
+            adapter.editModel(model, result.getInt("position"));
 
-
-        }));
-
+        });
     }
 
     private void initRecycler() {
-        adapter = new HomeAdapter();
+        adapter = new HomeAdapter(this);
         binding.rvTask.setAdapter(adapter);
     }
 
@@ -98,17 +97,54 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_btn_change) {
-            if (orStatus) {
+            if (!orStatus) {
                 item.setIcon(R.drawable.ic_baseline_widgets_24);
                 binding.rvTask.setLayoutManager(linearLayoutManager);
-                orStatus = false;
+                orStatus = true;
             } else {
                 item.setIcon(R.drawable.ic_outline_list_24);
                 binding.rvTask.setLayoutManager(staggeredGridLayoutManager);
-                orStatus = true;
+                orStatus = false;
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private void addTextListener() {
+        binding.searchEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+
+            }
+        });
+    }
+    private void filter(String text) {
+
+        List<TaskModel> newList = new ArrayList<>();
+        for (TaskModel item : adapter.list) {
+            if (item.getTitle().contains(text)) {
+                newList.add(item);
+            }
+        }
+        if (binding.searchEt.getText().toString().isEmpty()) {
+            adapter.listEmpty();
+        } else {
+            adapter.filterList(newList);
+        }
+
+
     }
 
     @Override
@@ -122,7 +158,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         Bundle bundle = new Bundle();
         bundle.putSerializable("mod",model);
         bundle.putSerializable("position",position);
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.action_nav_home_to_formFragment);
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
         navController.navigate(R.id.action_nav_home_to_formFragment,bundle);
 
     }

@@ -2,6 +2,7 @@ package com.example.slsl1_2.ui.slideshow;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.slsl1_2.databinding.FragmentFormBinding;
@@ -19,12 +21,14 @@ import com.example.slsl1_2.interfaces.OnItemClickListener;
 
 
 public class FormFragment extends Fragment {
-    TextView title,desc;
+    EditText title,desc;
     Button save;
+    String background;
     public TaskModel model;
     private boolean isEdit = false;
     private FragmentFormBinding binding;
     int pos;
+    private AppCompatButton btnB,btnY,btnR;
     private OnItemClickListener click;
     public void setClick(OnItemClickListener click) {
         this.click =click;
@@ -37,7 +41,20 @@ public class FormFragment extends Fragment {
         initView(view);
         initClickListener(view);
         getData();
+        initButtons();
         return view;
+    }
+
+    private void initButtons() {
+        btnB.setOnClickListener(v -> {
+            background = "black";
+        });
+        btnR.setOnClickListener(v -> {
+            background = "red";
+        });
+        btnY.setOnClickListener(v -> {
+            background = "yellow";
+        });
     }
 
     private void getData() {
@@ -53,7 +70,7 @@ public class FormFragment extends Fragment {
         save.setOnClickListener(v -> {
             if(isEdit){
                 String tit = title.getText().toString();
-                model = new TaskModel(tit);
+                model = new TaskModel(tit, background);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("keyModel",model);
                 bundle.putInt("position",pos);
@@ -62,7 +79,7 @@ public class FormFragment extends Fragment {
                 navController.navigateUp();
             } else {
                 String tit = title.getText().toString();
-                model = new TaskModel(tit);
+                model = new TaskModel(tit, background);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("keyModel", model);
                 getParentFragmentManager().setFragmentResult("eKey", bundle);
@@ -74,5 +91,8 @@ public class FormFragment extends Fragment {
         private void initView(View view) {
         title = view.findViewById(R.id.title_et);
         save = view.findViewById(R.id.btn_save);
+        btnY = view.findViewById(R.id.btn_yellow);
+        btnR = view.findViewById(R.id.btn_red);
+        btnB = view.findViewById(R.id.btn_black);
     }
 }
