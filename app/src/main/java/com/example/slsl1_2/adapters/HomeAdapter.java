@@ -1,8 +1,7 @@
-package com.example.slsl1_2.ui.home;
+package com.example.slsl1_2.adapters;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.R;
 import com.example.slsl1_2.interfaces.OnItemClickListener;
+import com.example.slsl1_2.fragments.HomeFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,7 +32,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         this.listener = listener;
     }
 
-    public void addModel(TaskModel model, OnItemClickListener listener) {
+    public void addModel(TaskModel model) {
         list.add(model);
         listSource = list;
         notifyDataSetChanged();

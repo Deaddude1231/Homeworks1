@@ -1,38 +1,34 @@
 package com.example.slsl1_2;
 
-import android.app.FragmentTransaction;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import com.example.slsl1_2.ui.home.HomeFragment;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.slsl1_2.databinding.ActivityMainBinding;
 
-import org.jetbrains.annotations.NotNull;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
-    public Button btn_change;
-    public static boolean orStatus = false;
-
+    private ImageView imPicture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +47,33 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(view -> {
             navController.navigate(R.id.action_nav_home_to_formFragment);
         });
+        getImage();
     }
     public void getImage(){
+        ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                new ActivityResultCallback<Uri>() {
+                    @Override
+                    public void onActivityResult(Uri uri) {
+                        // Handle the returned Uri
+                        try {
+                            final InputStream imageStream = getContentResolver().openInputStream(uri);
+                            final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            imPicture.setImageBitmap(selectedImage);
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
+                });
+        NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);
+        View header = navigation.getHeaderView(0);
+        imPicture = (ImageView) header.findViewById(R.id.imageView);
+        imPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mGetContent.launch("image/*");
+            }
+        });
     }
 
     @Override

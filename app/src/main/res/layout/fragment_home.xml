@@ -3,26 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="#221F1F"
     android:columnCount="2"
     android:orientation="vertical"
-    android:layout_height="match_parent"
     android:padding="15dp"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".fragments.HomeFragment">
+
     <EditText
+        android:padding="15dp"
+        android:background="@drawable/btn_black"
         android:id="@+id/searchEt"
-        android:textColorHint="@color/white"
-        android:hint="write here"
-        android:textColor="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/write_here"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_margin="5dp"
         android:id="@+id/rv_task"
-        android:orientation="vertical"
-        tools:listitem="@layout/layout_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
+        tools:listitem="@layout/layout_grid" />
 </LinearLayout>

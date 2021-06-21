@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.slsl1_2.ui.home.HomeFragment"
+        android:name="com.example.slsl1_2.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/formFragment"
-        android:name="com.example.slsl1_2.ui.slideshow.FormFragment"
+        android:name="com.example.slsl1_2.fragments.FormFragment"
         android:label="fragment_form"
         tools:layout="@layout/fragment_form" />
     <fragment

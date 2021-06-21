@@ -1,4 +1,4 @@
-package com.example.slsl1_2.ui.home;
+package com.example.slsl1_2.fragments;
 
 
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,9 +22,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.example.slsl1_2.R;
+import com.example.slsl1_2.Room.App;
+import com.example.slsl1_2.adapters.HomeAdapter;
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.databinding.FragmentHomeBinding;
 import com.example.slsl1_2.interfaces.OnItemClickListener;
+import com.example.slsl1_2.ui.home.HomeViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +40,9 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     public static HomeAdapter adapter;
+    public int position;
     public static boolean orStatus = false;
+    List<TaskModel> list;
     private LinearLayoutManager linearLayoutManager;
     private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
@@ -59,20 +65,27 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         } else {
             binding.rvTask.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-        getParentFragmentManager().setFragmentResultListener("eKey", getViewLifecycleOwner(), (requestKey, result) -> {
-            TaskModel model = (TaskModel) result.getSerializable("keyModel");
-            adapter.addModel(model,HomeFragment.this);
-        });
-        getParentFragmentManager().setFragmentResultListener("editData", getViewLifecycleOwner(), (requestKey, result) -> {
-            TaskModel model = (TaskModel) result.getSerializable("keyModel");
-            adapter.editModel(model, result.getInt("position"));
 
-        });
+       App.getInstance().getTaskDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
+           @Override
+           public void onChanged(List<TaskModel> taskModels) {
+               list = taskModels;
+               adapter.addListOfModel(taskModels);
+           }
+       });
     }
 
     private void initRecycler() {
-        adapter = new HomeAdapter(this);
         binding.rvTask.setAdapter(adapter);
+        getParentFragmentManager().setFragmentResultListener("send", getViewLifecycleOwner(), (requestKey, result) -> {
+            TaskModel model = (TaskModel) result.getSerializable("model");
+            TaskModel editedModel = (TaskModel) result.getSerializable("editedModel");
+            if(model != null){
+                adapter.addModel(model);
+            } else {
+                adapter.editModel(editedModel,position);
+            }
+        });
     }
 
     @Override
@@ -84,8 +97,9 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        super.onCreate(savedInstanceState);
+        adapter = new HomeAdapter(this);
     }
 
     @Override
