@@ -64,7 +64,7 @@ public class FormFragment extends Fragment {
         if (getArguments() != null) {
             mod = (TaskModel) getArguments().getSerializable("mod");
             if (mod != null) {
-                etTitle.setText(model.getTitle());
+                etTitle.setText(mod.getTitle());
             }
         }
     }

@@ -66,7 +66,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             binding.rvTask.setLayoutManager(new LinearLayoutManager(getContext()));
         }
 
-       App.getInstance().getTaskDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
+       App.getDataBase().getTaskDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
            @Override
            public void onChanged(List<TaskModel> taskModels) {
                list = taskModels;

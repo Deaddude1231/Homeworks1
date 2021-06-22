@@ -1,6 +1,8 @@
 package com.example.slsl1_2.Room;
 
 import android.app.Application;
+import android.content.Context;
+
 import androidx.room.Room;
 
 public class App extends Application {

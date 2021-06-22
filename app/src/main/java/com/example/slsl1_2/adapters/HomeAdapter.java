@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.slsl1_2.Room.App;
 import com.example.slsl1_2.model.TaskModel;
 import com.example.slsl1_2.R;
 import com.example.slsl1_2.interfaces.OnItemClickListener;
@@ -38,7 +39,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
     public void editModel(TaskModel model, int position) {
-        list.get(position).setTitle(model.getTitle());
+        App.dataBase.getTaskDao().update(model);
         notifyItemChanged(position);
     }
     public void addListOfModel(List<TaskModel> listM){
