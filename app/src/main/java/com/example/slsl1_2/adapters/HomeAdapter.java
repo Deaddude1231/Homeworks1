@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -81,7 +82,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         list = listSource;
         notifyDataSetChanged();
     }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
 
@@ -91,6 +91,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
         }
         @SuppressLint("ResourceAsColor")
         public void onBind(TaskModel model) {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    listener.onItemLongClick(getAdapterPosition(),model);
+                    return false;
+                }
+            });
             itemView.setOnClickListener(v -> {
                 listener.onItemClick(getAdapterPosition(),model);
             });
@@ -102,7 +109,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ViewHolder> {
                         itemView.setBackgroundResource(R.drawable.btn_black);
                         break;
                     case "yellow":
-                        title.setTextColor(Color.parseColor("#EC0505"));
+                        title.setTextColor(Color.parseColor("#000000"));
                         itemView.setBackgroundResource(R.drawable.btn_yellow);
                         break;
                     case "red":

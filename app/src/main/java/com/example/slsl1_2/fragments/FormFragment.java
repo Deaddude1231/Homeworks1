@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.slsl1_2.Room.App;
 import com.example.slsl1_2.databinding.FragmentFormBinding;
@@ -24,6 +26,8 @@ public class FormFragment extends Fragment {
     EditText etTitle;
     String time;
     Button save;
+    RadioGroup radioGroup;
+    RadioButton radio_black, radio_yellow, radio_red;
     String background;
     public TaskModel model;
     private boolean isEdit = false;
@@ -45,18 +49,33 @@ public class FormFragment extends Fragment {
         initClickListener(view);
         getData();
         initButtons();
+        checkRadio();
         return view;
     }
 
     private void initButtons() {
         btnB.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_b);
             background = "black";
         });
         btnR.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_b);
             background = "red";
         });
         btnY.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_y);
             background = "yellow";
+        });
+    }
+    private void checkRadio() {
+        radio_black.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_b);
+        });
+        radio_yellow.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_y);
+        });
+        radio_red.setOnClickListener(v -> {
+            radioGroup.check(R.id.r_r);
         });
     }
 
@@ -64,7 +83,10 @@ public class FormFragment extends Fragment {
         if (getArguments() != null) {
             mod = (TaskModel) getArguments().getSerializable("mod");
             if (mod != null) {
+                initButtons();
                 etTitle.setText(mod.getTitle());
+                mod.setBackground(mod.getBackground());
+                mod.setDate(mod.getDate());
             }
         }
     }
@@ -80,6 +102,7 @@ public class FormFragment extends Fragment {
             }
             else {
                 mod.setTitle(title);
+                mod.setBackground(background);
                 App.getDataBase().getTaskDao().update(mod);
                 bundle.putSerializable("editedModel", model);
             }
@@ -93,12 +116,16 @@ public class FormFragment extends Fragment {
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
         navController.navigateUp();
     }
-
     private void initView(View view) {
         etTitle = view.findViewById(R.id.title_et);
         save = view.findViewById(R.id.btn_save);
         btnY = view.findViewById(R.id.btn_yellow);
         btnR = view.findViewById(R.id.btn_red);
         btnB = view.findViewById(R.id.btn_black);
+        radioGroup = view.findViewById(R.id.radiogp);
+        radio_black = view.findViewById(R.id.r_b);
+        radio_yellow = view.findViewById(R.id.r_y);
+        radio_red = view.findViewById(R.id.r_r);
     }
+
 }

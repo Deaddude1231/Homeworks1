@@ -7,6 +7,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/drawer_background"
     android:padding="20dp">
+    <RadioGroup
+        android:id="@+id/radiogp"
+        android:orientation="horizontal"
+        android:layout_marginLeft="50dp"
+        android:layout_below="@id/title_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/r_r"
+            android:layout_below="@id/btn_red"
+            android:layout_marginLeft="250dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/r_b"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@id/btn_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <RadioButton
+                android:id="@+id/r_y"
+                android:layout_below="@id/btn_yellow"
+                android:layout_marginLeft="160dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_black"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="100dp"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:background="@drawable/btn_black"
+                android:layout_marginStart="50dp"
+                />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_yellow"
+                android:background="@drawable/btn_yellow"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/btn_black"
+                android:layout_toEndOf="@id/btn_black"
+                android:layout_marginStart="20dp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_red"
+                android:layout_width="80dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@id/btn_yellow"
+                android:background="@drawable/btn_red"
+                android:layout_marginStart="20dp"
+                android:layout_toEndOf="@id/btn_yellow" />
+        </RelativeLayout>
+    </RadioGroup>
     <EditText
         android:layout_marginTop="60dp"
         android:padding="20dp"
@@ -16,47 +76,17 @@
         android:textColorHint="#A19C9C"
         android:id="@+id/title_et"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="100dp"
         android:layout_marginBottom="10dp"/>
     <androidx.appcompat.widget.AppCompatButton
+        android:layout_below="@id/radiogp"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/btn_black"
         android:id="@+id/btn_save"
         android:textColor="@color/white"
         android:text="@string/save"
         android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_black"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="100dp"
-        android:layout_below="@id/title_et"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:background="@drawable/btn_black"
-        android:layout_marginStart="50dp"
-        />
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_below="@id/title_et"
-        android:id="@+id/btn_yellow"
-        android:background="@drawable/btn_yellow"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/btn_black"
-        android:layout_toEndOf="@id/btn_black"
-        android:layout_marginStart="20dp" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:layout_below="@id/title_et"
-        android:layout_width="80dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@id/btn_yellow"
-        android:background="@drawable/btn_red"
-        android:layout_marginStart="20dp"
-        android:layout_toEndOf="@id/btn_yellow" />
+
 
 </RelativeLayout>

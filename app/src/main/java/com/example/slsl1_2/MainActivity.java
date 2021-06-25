@@ -1,5 +1,6 @@
 package com.example.slsl1_2;
 
+import android.app.AlertDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.slsl1_2.preference.Preference;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -47,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(view -> {
             navController.navigate(R.id.action_nav_home_to_formFragment);
         });
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.formFragment) {
+                binding.appBarMain.fab.hide();
+
+            } else {
+                binding.appBarMain.fab.show();
+
+            }
+        });
+        Preference.init1(MainActivity.this);
         getImage();
     }
     public void getImage(){
@@ -54,15 +66,15 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri uri) {
-                        // Handle the returned Uri
                         try {
                             final InputStream imageStream = getContentResolver().openInputStream(uri);
                             final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                            Preference.addProperty("image", String.valueOf(uri));
                             imPicture.setImageBitmap(selectedImage);
-                        } catch (FileNotFoundException e) {
+                        }
+                        catch (FileNotFoundException e) {
                             e.printStackTrace();
                         }
-
                     }
                 });
         NavigationView navigation = (NavigationView) findViewById(R.id.nav_view);

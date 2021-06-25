@@ -1,6 +1,9 @@
 package com.example.slsl1_2.fragments;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,7 +16,10 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -21,6 +27,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import com.example.slsl1_2.MainActivity;
 import com.example.slsl1_2.R;
 import com.example.slsl1_2.Room.App;
 import com.example.slsl1_2.adapters.HomeAdapter;
@@ -35,12 +42,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 public class HomeFragment extends Fragment implements OnItemClickListener {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
-    public static HomeAdapter adapter;
-    public int position;
+    public HomeAdapter adapter;
+    public int pos;
+    Bundle bundle = new Bundle();
     public static boolean orStatus = false;
     List<TaskModel> list;
     private LinearLayoutManager linearLayoutManager;
@@ -65,14 +75,14 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         } else {
             binding.rvTask.setLayoutManager(new LinearLayoutManager(getContext()));
         }
-
-       App.getDataBase().getTaskDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
-           @Override
-           public void onChanged(List<TaskModel> taskModels) {
-               list = taskModels;
-               adapter.addListOfModel(taskModels);
-           }
-       });
+        binding.rvTask.setAdapter(adapter);
+        App.getDataBase().getTaskDao().getAll().observe(getViewLifecycleOwner(), new Observer<List<TaskModel>>() {
+            @Override
+            public void onChanged(List<TaskModel> taskModels) {
+                list = taskModels;
+                adapter.addListOfModel(taskModels);
+            }
+        });
     }
 
     private void initRecycler() {
@@ -80,10 +90,10 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
         getParentFragmentManager().setFragmentResultListener("send", getViewLifecycleOwner(), (requestKey, result) -> {
             TaskModel model = (TaskModel) result.getSerializable("model");
             TaskModel editedModel = (TaskModel) result.getSerializable("editedModel");
-            if(model != null){
+            if (model != null) {
                 adapter.addModel(model);
             } else {
-                adapter.editModel(editedModel,position);
+                adapter.editModel(editedModel, pos);
             }
         });
     }
@@ -144,6 +154,7 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
             }
         });
     }
+
     private void filter(String text) {
 
         List<TaskModel> newList = new ArrayList<>();
@@ -169,16 +180,35 @@ public class HomeFragment extends Fragment implements OnItemClickListener {
 
     @Override
     public void onItemClick(int position, TaskModel model) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("mod",model);
-        bundle.putSerializable("position",position);
+        pos = position;
+        bundle.putSerializable("mod", model);
+        bundle.putSerializable("position", position);
         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
-        navController.navigate(R.id.action_nav_home_to_formFragment,bundle);
+        navController.navigate(R.id.action_nav_home_to_formFragment, bundle);
 
     }
 
-    @Override
-    public void onItemLongClick(int position) {
+    private void myDialog(TaskModel model) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setPositiveButton("Подвердить", (dialog, which) -> {
+            bundle.getSerializable("position");
+            App.getDataBase().getTaskDao().delete(model);
+            dialog.dismiss();
+        });
+        builder.setNegativeButton("Отмена", (dialog, which) -> {
+            dialog.dismiss();
 
+        });
+        AlertDialog aDialog = builder.create();
+        aDialog.show();
+    }
+
+
+    @Override
+    public void onItemLongClick(int position, TaskModel model) {
+        pos = position;
+        bundle.putSerializable("mod", model);
+        bundle.putSerializable("position", position);
+        myDialog(model);
     }
 }

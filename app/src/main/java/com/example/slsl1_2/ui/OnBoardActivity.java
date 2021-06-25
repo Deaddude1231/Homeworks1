@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,9 +34,19 @@ public class OnBoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_board);
         pager =findViewById(R.id.vp_onboard);
+        checkShowing();
         ininView();
         initButtons();
         setData();
+    }
+    private void checkShowing(){
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OnBoardActivity.this);
+        Boolean showOnBoard = preferences.getBoolean("showOnBoard",false);
+        if(showOnBoard){
+            Intent intent = new Intent(OnBoardActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
@@ -42,11 +54,15 @@ public class OnBoardActivity extends AppCompatActivity {
         txtStart.setOnClickListener(v -> {
             Intent intent = new Intent(OnBoardActivity.this, MainActivity.class);
             startActivity(intent);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OnBoardActivity.this);
+            preferences.edit().putBoolean("showOnBoard",true).apply();
             finish();
         });
         txtSkip.setOnClickListener(v -> {
             Intent intent = new Intent(OnBoardActivity.this, MainActivity.class);
             startActivity(intent);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(OnBoardActivity.this);
+            preferences.edit().putBoolean("showOnBoard",true).apply();
             finish();
         });
 

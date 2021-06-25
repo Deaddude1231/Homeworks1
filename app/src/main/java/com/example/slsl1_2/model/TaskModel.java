@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+
 @Entity
 public class TaskModel implements Serializable {
     @PrimaryKey(autoGenerate = true)
@@ -24,7 +25,9 @@ public class TaskModel implements Serializable {
         this.title = title;
     }
 
-    public TaskModel(){}
+    public TaskModel() {
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
